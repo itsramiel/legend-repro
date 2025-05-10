@@ -4,6 +4,8 @@ import { useHeaderHeight } from "@react-navigation/elements";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Button,
+  FlatList,
+  ListRenderItemInfo,
   Platform,
   StyleSheet,
   Text,
@@ -11,7 +13,6 @@ import {
   View,
 } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
-import { LegendList, LegendListRenderItemProps } from "@legendapp/list";
 
 type TItem = {
   id: string;
@@ -21,7 +22,7 @@ type TItem = {
 };
 
 export default function ChatUi() {
-  const [data, setData] = useState<TItem[]>(INITIAL_DATA);
+  const [data, setData] = useState<TItem[]>(INITIAL_DATA.reverse());
 
   const onSend = (message: string) => {
     setData((prev) => [
@@ -45,16 +46,13 @@ export default function ChatUi() {
         // headerHeight is broken on Android https://github.com/software-mansion/react-native-screens/issues/2661
         keyboardVerticalOffset={Platform.OS === "ios" ? headerHeight : 97.14}
       >
-        <LegendList
-          alignItemsAtEnd
+        <FlatList
           style={styles.flex1}
           contentContainerStyle={styles.listContentContainer}
           data={data}
           renderItem={renderItem}
-          initialScrollIndex={data.length - 1}
-          maintainScrollAtEnd
-          maintainVisibleContentPosition
           keyExtractor={(item) => item.id}
+          inverted
         />
         <Input onSend={onSend} />
       </KeyboardAvoidingView>
@@ -111,11 +109,11 @@ function Input({ onSend }: InputProps) {
   );
 }
 
-function renderItem(props: LegendListRenderItemProps<TItem>) {
+function renderItem(props: ListRenderItemInfo<TItem>) {
   return <ListItem {...props} />;
 }
 
-function ListItem({ item }: LegendListRenderItemProps<TItem>) {
+function ListItem({ item }: ListRenderItemInfo<TItem>) {
   return (
     <View
       style={{
