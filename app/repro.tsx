@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { LegendList, LegendListRenderItemProps } from "@legendapp/list";
 
 const now = new Date();
@@ -14,28 +13,16 @@ const INITIAL_DATA = Array.from({ length: INITIAL_ITEMS_COUNTS }).map(
 );
 
 export default function Repro() {
-  const [data, setData] = useState(INITIAL_DATA);
-
   return (
     <View style={styles.screen}>
-      <Button
-        title="add items to front"
-        onPress={() => {
-          const firstDate = data[0];
-          const prevData = Array.from({ length: 10 })
-            .fill(0)
-            .map((_, i) => {
-              return new Date(
-                firstDate.getFullYear(),
-                firstDate.getMonth() - i - 1,
-              );
-            });
-          setData([...prevData.reverse(), ...data]);
-        }}
-      />
       <LegendList
         style={styles.list}
-        data={data}
+        data={INITIAL_DATA}
+        contentContainerStyle={{
+          padding: 16,
+        }}
+        ListHeaderComponent={<View style={{ height: 16 }} />}
+        initialScrollIndex={5}
         maintainVisibleContentPosition
         keyExtractor={(item) => item.toString()}
         renderItem={renderItem}
