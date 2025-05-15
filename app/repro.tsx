@@ -18,10 +18,6 @@ export default function Repro() {
       <LegendList
         style={styles.list}
         data={INITIAL_DATA}
-        contentContainerStyle={{
-          padding: 16,
-        }}
-        ListHeaderComponent={<View style={{ height: 16 }} />}
         initialScrollIndex={5}
         maintainVisibleContentPosition
         keyExtractor={(item) => item.toString()}
