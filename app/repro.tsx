@@ -39,6 +39,9 @@ export default function Repro() {
         maintainVisibleContentPosition
         keyExtractor={(item) => item.toString()}
         renderItem={renderItem}
+        ListHeaderComponent={
+          <Text style={styles.headerText}>This is a header</Text>
+        }
       />
     </View>
   );
@@ -59,6 +62,11 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 24,
     fontWeight: "semibold",
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: "semibold",
+    paddingVertical: 8,
   },
 });
 
